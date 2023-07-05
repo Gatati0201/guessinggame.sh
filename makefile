@@ -1,6 +1,12 @@
-README.md: guessinggame.sh
-    echo "# Titre du projet" > README.md
-    echo >> README.md
-    echo "Date et heure de génération du fichier README.md : $$(date)" >> README.md
-    echo >> README.md
-    echo "Nombre de lignes de code dans guessinggame.sh : $$(wc -l < guessinggame.sh)" >> README.md
+.SILENT: all clean
+TITLE = Guessing game
+output = README.md
+script = guessinggame.sh
+
+all:
+	echo "# $(TITLE)" > $(output)
+	echo "- The date and time at which make was run: *$$(date)*" >> $(output)
+	echo "- The number of lines of code contained in $(script): *$$(cat $(script) | wc -l)*" >> $(output)
+
+clean:
+	rm -f $(output)
