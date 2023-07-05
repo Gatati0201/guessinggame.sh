@@ -1,35 +1,36 @@
-# guessinggame.sh
-
 #!/bin/bash
 
-# Fonction pour obtenir le nombre de fichiers dans le répertoire courant
-function get_file_count {
-  local count=$(ls -l | grep "^-" | wc -l)
-  echo "$count"
+function GetNumFiles {
+	echo $(ls -la | grep "^-" | wc -l)
 }
 
-# Boucle principale du jeu de devinettes
-function guessing_game {
-  local file_count=$(get_file_count)
-  local guess=0
-
-  while [[ $guess -ne $file_count ]]
-  do
-    echo "Combien de fichiers se trouvent dans le répertoire courant ?"
-    read guess
-
-    if [[ $guess -lt $file_count ]]
-    then
-      echo "Trop bas ! Essayez encore."
-    elif [[ $guess -gt $file_count ]]
-    then
-      echo "Trop haut ! Essayez encore."
-    else
-      echo "Félicitations ! Vous avez deviné le bon nombre de fichiers."
-    fi
-  done
+function PrintRules {
+	  echo "We are trying to guess how many files in the current directory."echo "After the message \"Type in your number:\", please enter your your number and press Enter."
+	      echo "We will play the game forever till you guess the right answer."
+	   echo "Let's start our game. Good luck!"
+	     echo
+}
+	
+function Game {
+	    right_num_files=$(GetNumFiles)
+	    while true
+	do
+		echo -n "Type in your number: "
+		read num_files
+        	if [[ $num_files -eq $right_num_files ]]
+		then
+			echo "Great! You guess the right number of files in the current directory!"
+			exit 0
+		elif [[ $num_files -lt $right_num_files ]]
+		then
+			echo "Your number is lower than number of files in the current directory! Please, try again."
+		else
+			echo "Your number is upper then number of files in the current directory! Please, try again."
+        	fi
+	   done
 }
 
-guessing_game
+PrintRules
+Game
 
 
